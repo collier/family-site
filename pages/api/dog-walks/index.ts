@@ -8,15 +8,15 @@ export default async function handler(
 ) {
   switch (req.method) {
     case 'GET':
-      return getHandler(req, res);
+      return handleGet(req, res);
     case 'POST':
-      return postHandler(req, res);
+      return handlePost(req, res);
     default:
-      res.status(405);
+      res.status(405).end();
   }
 }
 
-async function getHandler(req: NextApiRequest, res: NextApiResponse) {
+async function handleGet(req: NextApiRequest, res: NextApiResponse) {
   const query = req.query;
   if (query?.date === 'today') {
     const walks = await dogWalkService.getTodaysDogWalks();
@@ -26,9 +26,8 @@ async function getHandler(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
-async function postHandler(req: NextApiRequest, res: NextApiResponse) {
+async function handlePost(req: NextApiRequest, res: NextApiResponse) {
   const newDogWalk = req.body;
   const result = await dogWalkService.addDogWalk(newDogWalk);
-  console.log(result);
   res.status(200).json(result);
 }

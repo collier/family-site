@@ -46,9 +46,7 @@ export async function updateDogWalk(
 ): Promise<DogWalk> {
   const { id, petId, didPee, didPoop, walkedAt } = updatedDogWalk;
   const result = await db.query(
-    `
-    UPDATE TABLE dog_walk SET pet_id=$1, did_pee=$2, did_poop=$3, walked_at=$4 WHERE id=$5
-  `,
+    'UPDATE dog_walk SET pet_id=$1, did_pee=$2, did_poop=$3, walked_at=$4 WHERE id=$5 RETURNING *',
     [petId, didPee, didPoop, walkedAt, id]
   );
   const newRow = result.rows[0];
