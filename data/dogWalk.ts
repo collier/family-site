@@ -64,7 +64,7 @@ export async function getTodaysDogWalks(): Promise<DogWalk[]> {
       walk.pet_id, 
       walk.did_pee, 
       walk.did_poop, 
-      walk.walked_at, 
+      walk.walked_at::text,
       pet.pet_name 
     FROM dog_walk walk 
     INNER JOIN pet ON walk.pet_id = pet.id 
