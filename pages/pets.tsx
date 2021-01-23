@@ -1,6 +1,7 @@
 import { getTodaysDogWalks, DogWalk } from '../data/dogWalk';
 import WalkList from '@/components/WalkList';
 import Button from '@/components/Button';
+import FeedDogIcon from '@/components/icons/FeedDogIcon';
 
 type Props = {
   dogWalks: DogWalk[];
@@ -15,9 +16,8 @@ export default function Pets({ dogWalks }: Props) {
     <div className="container font-muli">
       <h1 className="text-5xl font-bold font-lora uppercase">Dog Walks</h1>
       <WalkList dogWalks={dogWalks} />
-      <Button variant="secondary" onClick={handleClick}>
-        Add Walk
-      </Button>
+      <FeedDogIcon />
+      <Button onClick={handleClick}>Add Walk</Button>
     </div>
   );
 }
