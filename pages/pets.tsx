@@ -1,16 +1,23 @@
 import { getTodaysDogWalks, DogWalk } from '../data/dogWalk';
-import WalkList from '@/components/pets/WalkList';
+import WalkList from '@/components/WalkList';
+import Button from '@/components/Button';
 
 type Props = {
   dogWalks: DogWalk[];
 };
 
 export default function Pets({ dogWalks }: Props) {
+  const handleClick = () => {
+    console.log('hello world');
+  };
+
   return (
     <div className="container font-muli">
       <h1 className="text-5xl font-bold font-lora uppercase">Dog Walks</h1>
       <WalkList dogWalks={dogWalks} />
-      <button>Add Walk</button>
+      <Button variant="secondary" onClick={handleClick}>
+        Add Walk
+      </Button>
     </div>
   );
 }

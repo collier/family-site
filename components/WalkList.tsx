@@ -1,4 +1,4 @@
-import { DogWalk } from '../../data/dogWalk';
+import { DogWalk } from '../data/dogWalk';
 
 type Props = {
   dogWalks: DogWalk[];

@@ -19,9 +19,13 @@ module.exports = {
       xl: '700px',
     },
     fontFamily: {
-      muli:
-        'Muli, "Helvetica Neue", "Gill Sans", "Gill Sans MT", Calibri, sans-serif',
+      muli: 'Muli, "Helvetica Neue", "Gill Sans", "Gill Sans MT", Calibri, sans-serif',
       lora: 'Lora, Georgia, serif',
+    },
+  },
+  variants: {
+    extend: {
+      backgroundColor: ['active'],
     },
   },
 };
