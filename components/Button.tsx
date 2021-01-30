@@ -1,13 +1,25 @@
-import cx from 'classnames';
 import { PropsWithChildren, MouseEvent } from 'react';
+import cx from 'classnames';
+import Link from 'next/link';
 
-type Props = PropsWithChildren<{
+type SharedProps = PropsWithChildren<{
   variant?: 'primary' | 'secondary' | 'white';
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
-  onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
 }>;
 
-export default function Button({ variant = 'primary', size = 'md', children, onClick }: Props) {
+type LinkProps = SharedProps & {
+  role: 'link';
+  href: string;
+};
+
+type ButtonProps = SharedProps & {
+  role: 'button';
+  onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
+};
+
+type Props = LinkProps | ButtonProps;
+
+export default function Button({ variant = 'primary', size = 'md', children, ...props }: Props) {
   const btnClass = cx(
     'inline-flex items-center border font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500',
     {
@@ -23,9 +35,19 @@ export default function Button({ variant = 'primary', size = 'md', children, onC
       'border-gray-300 shadow-sm text-gray-700 bg-white hover:bg-gray-50 active:bg-indigo-100': variant === 'white',
     }
   );
-  return (
-    <button type="button" className={btnClass} onClick={onClick}>
-      {children}
-    </button>
-  );
+  if (props.role === 'link') {
+    return (
+      <Link href={props.href}>
+        <a type="button" className={btnClass}>
+          {children}
+        </a>
+      </Link>
+    );
+  } else {
+    return (
+      <button type="button" className={btnClass} onClick={props.onClick}>
+        {children}
+      </button>
+    );
+  }
 }

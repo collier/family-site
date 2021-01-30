@@ -1,5 +1,6 @@
 import { PetEvent } from '../data/petLog';
 import DogWalkIcon from '@/components/icons/DogWalkIcon';
+import Badge from '@/components/Badge';
 
 type PetLogEventProps = {
   event: PetEvent;
@@ -10,14 +11,16 @@ function PetEventLogEntry({ event }: PetLogEventProps) {
   let editLink = '#';
   let eventBody = null;
 
-  const { id, occuredAt, eventDetails } = event;
+  const { occuredAt } = event;
   switch (event.kind) {
     case 'walk':
-      icon = <DogWalkIcon className="h-9 w-9" />;
+      const { petName, didPee, didPoop } = event.eventDetails;
+      icon = <DogWalkIcon className="h-9 w-9 mt-1" />;
       eventBody = (
         <div>
-          <p className="text-sm text-gray-500 font-bold">Walked {eventDetails.petName}</p>
-          {/* <p className="text-sm text-gray-500">Pee - Poop</p> */}
+          <p className="text-gray-500">Walked {petName}</p>
+          {didPee && <span className="text-lg">💦</span>}
+          {didPoop && <span className="text-lg">💩</span>}
         </div>
       );
       break;
@@ -26,7 +29,7 @@ function PetEventLogEntry({ event }: PetLogEventProps) {
   }
 
   return (
-    <li key={id}>
+    <li>
       <div className="relative pb-8">
         <span className="absolute top-6 left-6 -ml-px h-full w-0.5 bg-gray-200" aria-hidden="true"></span>
         <div className="relative flex items-center space-x-3">
@@ -60,7 +63,7 @@ export default function PetEventLog({ events }: Props) {
     <div className="flow-root">
       <ul className="-mb-8">
         {events.map((event) => (
-          <PetEventLogEntry event={event} />
+          <PetEventLogEntry key={event.id} event={event} />
         ))}
       </ul>
     </div>

@@ -5,8 +5,8 @@ module.exports = {
     container: {
       center: true,
       padding: {
-        default: '1.5rem',
-        sm: '1.5rem',
+        DEFAULT: '0.5rem',
+        sm: '1rem',
         md: '0rem',
         lg: '0rem',
         xl: '0rem',
@@ -19,7 +19,9 @@ module.exports = {
       xl: '700px',
     },
     fontFamily: {
-      muli: 'Muli, "Helvetica Neue", "Gill Sans", "Gill Sans MT", Calibri, sans-serif',
+      sans: 'Inter, "Helvetica Neue", "Gill Sans", "Gill Sans MT", Calibri, sans-serif',
+      serif: 'Lora, Georgia, serif',
+      inter: 'Inter, "Helvetica Neue", "Gill Sans", "Gill Sans MT", Calibri, sans-serif',
       lora: 'Lora, Georgia, serif',
     },
   },
@@ -28,4 +30,5 @@ module.exports = {
       backgroundColor: ['active'],
     },
   },
+  plugins: [require('@tailwindcss/forms')],
 };

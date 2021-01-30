@@ -1,8 +1,8 @@
 import { getTodaysDogWalks, DogWalk } from '../data/dogWalk';
+import { PetEvent } from '../data/petLog';
 import PetEventLog from '@/components/PetEventLog';
 import WalkList from '@/components/WalkList';
 import Button from '@/components/Button';
-import { PetEvent } from 'data/petLog';
 
 const testData: PetEvent[] = [
   {
@@ -37,15 +37,17 @@ type Props = {
   dogWalks: DogWalk[];
 };
 
-export default function Pets({ dogWalks }: Props) {
+export default function PetLogPage({ dogWalks }: Props) {
   const handleClick = () => {
     console.log('hello world');
   };
 
   return (
-    <div className="container font-muli">
-      <h1 className="text-5xl font-bold font-lora uppercase">Pet Log</h1>
-      <Button onClick={handleClick}>Add Walk</Button>
+    <div className="container">
+      <h1 className="text-5xl font-bold font-lora">Pet Log</h1>
+      <Button role="link" href="/dog-walk/new">
+        Add Walk
+      </Button>
       <hr className="my-2" />
       <WalkList dogWalks={dogWalks} />
       <PetEventLog events={testData} />
