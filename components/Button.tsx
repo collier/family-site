@@ -1,6 +1,7 @@
 import { PropsWithChildren, MouseEvent } from 'react';
 import cx from 'classnames';
 import Link from 'next/link';
+import LoadingSpinner from './LoadingSpinner';
 
 type SharedProps = PropsWithChildren<{
   variant?: 'primary' | 'secondary' | 'white';
@@ -13,7 +14,9 @@ type LinkProps = SharedProps & {
 };
 
 type ButtonProps = SharedProps & {
-  role: 'button';
+  role?: 'button';
+  loading?: boolean;
+  type?: 'submit' | 'reset' | 'button';
   onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
 };
 
@@ -21,7 +24,7 @@ type Props = LinkProps | ButtonProps;
 
 export default function Button({ variant = 'primary', size = 'md', children, ...props }: Props) {
   const btnClass = cx(
-    'inline-flex items-center border font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500',
+    'block w-full sm:w-auto sm:inline-flex disabled:opacity-50 items-center border font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500',
     {
       'px-2.5 py-1.5 text-xs rounded': size === 'xs',
       'px-3 py-2 text-sm rounded-md': size === 'sm',
@@ -44,9 +47,10 @@ export default function Button({ variant = 'primary', size = 'md', children, ...
       </Link>
     );
   } else {
+    const { loading, onClick, type } = props;
     return (
-      <button type="button" className={btnClass} onClick={props.onClick}>
-        {children}
+      <button type={type} className={btnClass} onClick={onClick} disabled={loading ? loading : false}>
+        {loading ? <LoadingSpinner /> : children}
       </button>
     );
   }

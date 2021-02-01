@@ -7,16 +7,16 @@ module.exports = {
       padding: {
         DEFAULT: '0.5rem',
         sm: '1rem',
-        md: '0rem',
-        lg: '0rem',
-        xl: '0rem',
+        md: '1rem',
+        lg: '1rem',
+        xl: '1rem',
       },
     },
     screens: {
       sm: '640px',
-      md: '700px',
-      lg: '700px',
-      xl: '700px',
+      md: '768px',
+      lg: '768px',
+      xl: '768px',
     },
     fontFamily: {
       sans: 'Inter, "Helvetica Neue", "Gill Sans", "Gill Sans MT", Calibri, sans-serif',
@@ -28,6 +28,7 @@ module.exports = {
   variants: {
     extend: {
       backgroundColor: ['active'],
+      opacity: ['disabled'],
     },
   },
   plugins: [require('@tailwindcss/forms')],
