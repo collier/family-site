@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-import * as dogWalkService from '../../../data/dogWalk';
+import * as petFeedService from '../../../data/petFeed';
 
 export default async function handler(
   req: NextApiRequest,
@@ -17,23 +17,23 @@ export default async function handler(
 }
 
 async function handlePut(req: NextApiRequest, res: NextApiResponse) {
-  const { dogWalkId } = req.query;
-  if (typeof dogWalkId !== 'string') {
+  const { petFeedId } = req.query;
+  if (typeof petFeedId !== 'string') {
     return res.status(400).end();
   }
-  if (dogWalkId !== req.body.id) {
+  if (petFeedId !== req.body.id) {
     return res.status(400).end();
   }
-  const updatedDogWalk = req.body;
-  const result = await dogWalkService.updateDogWalk(updatedDogWalk);
+  const updatedPetFeed = req.body;
+  const result = await petFeedService.updatePetFeed(updatedPetFeed);
   res.status(200).json(result);
 }
 
 async function handleDelete(req: NextApiRequest, res: NextApiResponse) {
-  const { dogWalkId } = req.query;
-  if (typeof dogWalkId !== 'string') {
+  const { petFeedId } = req.query;
+  if (typeof petFeedId !== 'string') {
     return res.status(400).end();
   }
-  await dogWalkService.deleteDogWalk(dogWalkId);
-  res.status(200).json({ id: dogWalkId });
+  await petFeedService.deletePetFeed(petFeedId);
+  res.status(200).json({ id: petFeedId });
 }

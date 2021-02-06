@@ -9,7 +9,7 @@ type Props = PropsWithChildren<{
 export default function FormGroup({ className, label, children }: Props) {
   return (
     <div className={cx(className, 'mb-4')}>
-      <label className="block text-sm font-medium text-gray-700">{label}</label>
+      <label className="block text-sm font-bold">{label}</label>
       <div className="mt-1">{children}</div>
     </div>
   );

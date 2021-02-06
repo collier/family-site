@@ -17,6 +17,25 @@ export interface NewDogWalk {
   walkedAt?: string;
 }
 
+export async function getDogWalk(dogWalkId: string): Promise<DogWalk | null> {
+  const { rows } = await db.query(
+    `
+    SELECT 
+      walk.id, 
+      walk.pet_id, 
+      walk.did_pee, 
+      walk.did_poop, 
+      to_json(walk.walked_at) as walked_at,
+      pet.pet_name 
+    FROM dog_walk walk 
+    INNER JOIN pet ON walk.pet_id = pet.id 
+    WHERE walk.id = $1
+  `,
+    [dogWalkId]
+  );
+  return rows[0] ? camelizeKeys(rows[0]) : null;
+}
+
 export async function addDogWalk(newDogWalk: NewDogWalk): Promise<DogWalk> {
   const { petId, didPee, didPoop, walkedAt } = newDogWalk;
   let query =
@@ -28,7 +47,6 @@ export async function addDogWalk(newDogWalk: NewDogWalk): Promise<DogWalk> {
     params = [petId, didPee, didPoop, walkedAt];
   }
   const result = await db.query(query, params);
-  console.log(result);
   const newRow = result.rows[0];
   return camelizeKeys(newRow);
 }
@@ -64,11 +82,12 @@ export async function getTodaysDogWalks(): Promise<DogWalk[]> {
       walk.pet_id, 
       walk.did_pee, 
       walk.did_poop, 
-      walk.walked_at::text,
+      to_json(walk.walked_at) as walked_at,
       pet.pet_name 
     FROM dog_walk walk 
     INNER JOIN pet ON walk.pet_id = pet.id 
     WHERE walked_at > CURRENT_DATE AND walked_at < NOW()::date + interval '1 DAY'
+    ORDER BY walk.walked_at DESC
   `);
   return camelizeKeys(rows);
 }
