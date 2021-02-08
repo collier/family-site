@@ -2,6 +2,7 @@ import { PropsWithChildren } from 'react';
 import { useForm } from 'react-hook-form';
 
 import FormGroup from '@/components/FormGroup';
+import FormGroupError from '@/components/FormGroupError';
 import SelectInput from '@/components/SelectInput';
 import NumberInput from '@/components/NumberInput';
 import DateInput from '@/components/DateInput';
@@ -20,29 +21,57 @@ type Props = PropsWithChildren<{
 }>;
 
 export function PetFeedForm({ defaultValues, onSubmit, children }: Props) {
-  const { register, handleSubmit } = useForm<PetFeedFormData>({
+  const { register, handleSubmit, errors } = useForm<PetFeedFormData>({
     defaultValues,
   });
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmit)} noValidate>
       <FormGroup label="Pet">
         <SelectInput name="petId" ref={register}>
           <option value="RIESLING">Riesling</option>
           <option value="KODA">Koda</option>
         </SelectInput>
       </FormGroup>
-      <FormGroup label="Scoops" helpText="A scoop is 1/2 a cup.">
+      <FormGroup label="Scoops" helpText='A "scoop" is ½ a cup.'>
         <NumberInput
           name="dryFoodScoops"
-          ref={register({ pattern: /^\d{1}$|^\d+\.\d{0,1}$/ })}
+          step="0.1"
+          min="0.1"
+          max="9.9"
+          inputMode="decimal"
+          hasError={!!errors.dryFoodScoops}
+          ref={register({
+            required: true,
+            pattern: /^\d{1}$|^\d+\.\d{0,1}$/,
+          })}
         />
+        {errors.dryFoodScoops?.type === 'pattern' && (
+          <FormGroupError text="Must be a number between 0 and 10 with at most one decimal place." />
+        )}
+        {errors.dryFoodScoops?.type === 'required' && (
+          <FormGroupError text="Required" />
+        )}
       </FormGroup>
       <FormGroup label="Feed Date">
-        <DateInput name="feedDate" ref={register} />
+        <DateInput
+          name="feedDate"
+          hasError={!!errors.feedDate}
+          ref={register({ required: true })}
+        />
+        {errors.feedDate?.type === 'required' && (
+          <FormGroupError text="Required" />
+        )}
       </FormGroup>
       <FormGroup label="Feed Time">
-        <TimeInput name="feedTime" ref={register} />
+        <TimeInput
+          name="feedTime"
+          hasError={!!errors.feedTime}
+          ref={register({ required: true })}
+        />
+        {errors.feedTime?.type === 'required' && (
+          <FormGroupError text="Required" />
+        )}
       </FormGroup>
       {children}
     </form>

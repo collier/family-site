@@ -3,6 +3,7 @@ import { useForm, Controller } from 'react-hook-form';
 
 import DateInput from '@/components/DateInput';
 import FormGroup from '@/components/FormGroup';
+import FormGroupError from '@/components/FormGroupError';
 import SelectInput from '@/components/SelectInput';
 import TimeInput from '@/components/TimeInput';
 import ToggleButton from '@/components/ToggleButton';
@@ -21,12 +22,12 @@ type Props = PropsWithChildren<{
 }>;
 
 export function DogWalkForm({ defaultValues, onSubmit, children }: Props) {
-  const { register, handleSubmit, control } = useForm<DogWalkFormData>({
+  const { register, handleSubmit, control, errors } = useForm<DogWalkFormData>({
     defaultValues,
   });
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmit)} noValidate>
       <FormGroup label="Pet">
         <SelectInput name="petId" ref={register}>
           <option value="RIESLING">Riesling</option>
@@ -62,10 +63,24 @@ export function DogWalkForm({ defaultValues, onSubmit, children }: Props) {
         </div>
       </FormGroup>
       <FormGroup label="Walk Date">
-        <DateInput name="walkDate" ref={register} />
+        <DateInput
+          name="walkDate"
+          hasError={!!errors.walkDate}
+          ref={register({ required: true })}
+        />
+        {errors.walkDate?.type === 'required' && (
+          <FormGroupError text="Required" />
+        )}
       </FormGroup>
       <FormGroup label="Walk Time">
-        <TimeInput name="walkTime" ref={register} />
+        <TimeInput
+          name="walkTime"
+          hasError={!!errors.walkTime}
+          ref={register({ required: true })}
+        />
+        {errors.walkTime?.type === 'required' && (
+          <FormGroupError text="Required" />
+        )}
       </FormGroup>
       {children}
     </form>

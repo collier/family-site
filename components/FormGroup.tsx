@@ -17,11 +17,7 @@ export default function FormGroup({
     <div className={cx(className, 'mb-4')}>
       <label className="block text-sm font-bold">{label}</label>
       <div className="mt-1">{children}</div>
-      {helpText && (
-        <p className="mt-2 text-sm text-gray-500" id="email-description">
-          {helpText}
-        </p>
-      )}
+      {helpText && <p className="mt-2 text-sm text-gray-500">{helpText}</p>}
     </div>
   );
 }

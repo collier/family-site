@@ -25,7 +25,7 @@ export default function PetEventLog({ events }: Props) {
               editLink = `/dog-walk/${walk.id}/edit`;
               eventBody = (
                 <div>
-                  <p className="font-bold">Walked {walk.petName}</p>
+                  <p className="font-semibold">Walked {walk.petName}</p>
                   {walk.didPee && <span className="text-lg">💦</span>}
                   {walk.didPoop && <span className="text-lg">💩</span>}
                 </div>
@@ -37,7 +37,7 @@ export default function PetEventLog({ events }: Props) {
               editLink = `/pet-feed/${feed.id}/edit`;
               eventBody = (
                 <div>
-                  <p className="font-bold">Fed {feed.petName}</p>
+                  <p className="font-semibold">Fed {feed.petName}</p>
                   <p className="text-gray-500">
                     {feed.dryFoodScoops} scoop{feed.dryFoodScoops !== 1 && 's'}
                   </p>
