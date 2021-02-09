@@ -43,6 +43,7 @@ export function PetFeedForm({ defaultValues, onSubmit, children }: Props) {
           hasError={!!errors.dryFoodScoops}
           ref={register({
             required: true,
+            valueAsNumber: true,
             pattern: /^\d{1}$|^\d+\.\d{0,1}$/,
           })}
         />

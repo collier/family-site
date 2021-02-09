@@ -4,8 +4,8 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        cream: '#faf3e1',
-        // cream: '#f9f6f1',
+        // cream: '#faf3e1',
+        cream: '#f9f6f1',
       },
     },
     container: {

@@ -1,5 +1,6 @@
-import { PetEvent } from '../data/petLog';
 import { format, parseISO } from 'date-fns';
+
+import { PetEvent } from '@/services/PetActivityService';
 import DogWalkIcon from '@/components/icons/DogWalkIcon';
 import FeedDogIcon from '@/components/icons/FeedDogIcon';
 
@@ -21,8 +22,10 @@ export default function PetEventLog({ events }: Props) {
           switch (event.kind) {
             case 'walk':
               const walk = event.eventDetails;
-              icon = <DogWalkIcon className="h-9 w-9 mt-1" />;
-              editLink = `/dog-walk/${walk.id}/edit`;
+              icon = (
+                <DogWalkIcon className="h-9 w-9 mt-1 fill-current text-gray-800" />
+              );
+              editLink = `/pet-activity/dog-walk/${walk.id}/edit`;
               eventBody = (
                 <div>
                   <p className="font-semibold">Walked {walk.petName}</p>
@@ -33,8 +36,10 @@ export default function PetEventLog({ events }: Props) {
               break;
             case 'feed':
               const feed = event.eventDetails;
-              icon = <FeedDogIcon className="h-10 w-10 mt-2" />;
-              editLink = `/pet-feed/${feed.id}/edit`;
+              icon = (
+                <FeedDogIcon className="h-10 w-10 mt-2 fill-current text-gray-800" />
+              );
+              editLink = `/pet-activity/pet-feed/${feed.id}/edit`;
               eventBody = (
                 <div>
                   <p className="font-semibold">Fed {feed.petName}</p>
@@ -51,11 +56,11 @@ export default function PetEventLog({ events }: Props) {
             <li key={event.id}>
               <div className="relative pb-8">
                 {!isLast && (
-                  <span className="absolute top-6 left-6 -ml-px h-full w-0.5 bg-gray-300"></span>
+                  <span className="absolute top-6 left-6 -ml-px h-full w-0.5 bg-gray-200"></span>
                 )}
                 <div className="relative flex items-center space-x-3">
                   <div>
-                    <span className="h-12 w-12 rounded-full bg-gray-400 flex items-center justify-center ring-8 ring-cream">
+                    <span className="h-12 w-12 rounded-full bg-gray-300 flex items-center justify-center ring-8 ring-cream">
                       {icon}
                     </span>
                   </div>
@@ -68,7 +73,7 @@ export default function PetEventLog({ events }: Props) {
                   <div>
                     <a
                       href={editLink}
-                      className="inline-flex items-center shadow-sm px-2.5 py-0.5 border border-gray-300 text-sm leading-5 font-medium rounded-full text-gray-700 bg-white hover:bg-gray-50"
+                      className="inline-flex items-center shadow-sm px-3 py-1 border border-gray-300 text-sm leading-5 font-medium rounded-full text-gray-700 bg-white hover:bg-gray-50"
                     >
                       Edit
                     </a>

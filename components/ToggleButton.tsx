@@ -30,8 +30,8 @@ export default function ToggleButton({
       className={cx(
         'block w-full px-5 py-2 border border-transparent shadow-sm text-xl font-semibold rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500',
         {
-          'bg-green-400 hover:bg-green-500 text-white': isOn,
-          'bg-gray-300 hover:bg-gray-400': !isOn,
+          'bg-green-400 text-white': isOn,
+          'bg-gray-300': !isOn,
         }
       )}
     >

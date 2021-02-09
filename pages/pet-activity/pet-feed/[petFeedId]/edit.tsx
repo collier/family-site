@@ -1,43 +1,47 @@
 import { useState } from 'react';
-import { format, parseISO, parse } from 'date-fns';
+import { format, parse, parseISO } from 'date-fns';
 import { useRouter } from 'next/router';
 
+import { getPetFeed, PetFeed } from '@/services/PetFeedService';
 import Button from '@/components/Button';
-import { DogWalkForm, DogWalkFormData } from '@/components/DogWalkForm';
 import ConfirmationModal from '@/components/ConfirmationModal';
-import { getDogWalk, DogWalk } from '../../../data/dogWalk';
+import BackLink from '@/components/BackLink';
+import {
+  PetFeedFormData,
+  PetFeedForm,
+} from '@/components/pet-activity/PetFeedForm';
 
 type Props = {
-  dogWalkId: string;
-  dogWalk: DogWalk;
+  petFeedId: string;
+  petFeed: PetFeed;
 };
 
-export default function EditDogWalkPage({ dogWalkId, dogWalk }: Props) {
+export default function EditPetFeedPage({ petFeedId, petFeed }: Props) {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
-  const onSubmit = (newDogWalk: DogWalkFormData) => {
-    const { petId, didPee, didPoop, walkDate, walkTime } = newDogWalk;
+  const onSubmit = (data: PetFeedFormData) => {
+    const { petId, dryFoodScoops, feedDate, feedTime } = data;
 
-    const walkedAt = parse(
-      `${walkDate}${walkTime}`,
+    const fedAt = parse(
+      `${feedDate}${feedTime}`,
       'yyyy-MM-ddHH:mm',
       new Date()
     ).toISOString();
 
     setIsSubmitting(true);
 
-    fetch(`/api/dog-walks/${dogWalkId}`, {
+    fetch(`/api/pet-feeds/${petFeedId}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ id: dogWalkId, petId, didPee, didPoop, walkedAt }),
+      body: JSON.stringify({ id: petFeedId, petId, dryFoodScoops, fedAt }),
     }).then(
       () => {
-        router.push('/pet-log');
+        router.push('/pet-activity');
       },
       (error) => {
         console.log(error);
@@ -49,11 +53,11 @@ export default function EditDogWalkPage({ dogWalkId, dogWalk }: Props) {
   const handleDelete = () => {
     setIsDeleting(true);
 
-    fetch(`/api/dog-walks/${dogWalkId}`, {
+    fetch(`/api/pet-feeds/${petFeedId}`, {
       method: 'DELETE',
     }).then(
       () => {
-        router.push('/pet-log');
+        router.push('/pet-activity');
       },
       (error) => {
         console.log(error);
@@ -62,24 +66,29 @@ export default function EditDogWalkPage({ dogWalkId, dogWalk }: Props) {
     );
   };
 
-  const walkedDate = parseISO(dogWalk.walkedAt);
-  var defaultValues: DogWalkFormData = {
-    petId: dogWalk.petId,
-    didPee: dogWalk.didPee,
-    didPoop: dogWalk.didPoop,
-    walkDate: format(walkedDate, 'yyyy-MM-dd'),
-    walkTime: format(walkedDate, 'HH:mm'),
+  const fedDate = parseISO(petFeed.fedAt);
+  var defaultValues: PetFeedFormData = {
+    petId: petFeed.petId,
+    dryFoodScoops: petFeed.dryFoodScoops,
+    feedDate: format(fedDate, 'yyyy-MM-dd'),
+    feedTime: format(fedDate, 'HH:mm'),
   };
 
   return (
     <div className="container">
-      <h1 className="text-5xl font-bold font-lora pt-2 pb-3">Edit Dog Walk</h1>
-      <DogWalkForm onSubmit={onSubmit} defaultValues={defaultValues}>
+      <BackLink href="/pet-activity" text="Pet Activity" />
+      <h1 className="text-5xl font-bold font-lora pb-3">Edit Pet Feed</h1>
+      <PetFeedForm onSubmit={onSubmit} defaultValues={defaultValues}>
         <div className="space-y-2 sm:space-x-2 sm:space-y-0">
           <Button type="submit" size="lg" loading={isSubmitting}>
-            Update Walk
+            Submit Edits
           </Button>
-          <Button role="link" href="/pet-log" size="lg" variant="secondary">
+          <Button
+            role="link"
+            href="/pet-activity"
+            size="lg"
+            variant="secondary"
+          >
             Cancel
           </Button>
           <Button
@@ -89,14 +98,14 @@ export default function EditDogWalkPage({ dogWalkId, dogWalk }: Props) {
             disabled={isSubmitting}
             onClick={() => setShowDeleteModal(true)}
           >
-            Delete Walk
+            Delete Feed
           </Button>
         </div>
-      </DogWalkForm>
+      </PetFeedForm>
       <ConfirmationModal
         show={showDeleteModal}
-        title="Delete Walk?"
-        confirmText="Are you sure you want to delete this walk?"
+        title="Delete Feeding?"
+        confirmText="Are you sure you want to delete this feeding?"
         onClickBackdrop={() => setShowDeleteModal(false)}
         confirmButton={
           <Button
@@ -105,7 +114,7 @@ export default function EditDogWalkPage({ dogWalkId, dogWalk }: Props) {
             onClick={handleDelete}
             variant="danger"
           >
-            Delete Walk
+            Delete Feed
           </Button>
         }
         cancelButton={
@@ -123,17 +132,17 @@ export default function EditDogWalkPage({ dogWalkId, dogWalk }: Props) {
 }
 
 export async function getServerSideProps(context) {
-  const { dogWalkId } = context.params;
+  const { petFeedId } = context.params;
 
-  if (typeof dogWalkId !== 'string') {
+  if (typeof petFeedId !== 'string') {
     return null;
   }
 
-  const dogWalk = await getDogWalk(dogWalkId);
+  const petFeed = await getPetFeed(petFeedId);
   return {
     props: {
-      dogWalkId,
-      dogWalk,
+      petFeedId,
+      petFeed,
     },
   };
 }

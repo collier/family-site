@@ -86,7 +86,9 @@ export async function getTodaysDogWalks(): Promise<DogWalk[]> {
       pet.pet_name 
     FROM dog_walk walk 
     INNER JOIN pet ON walk.pet_id = pet.id 
-    WHERE walked_at > CURRENT_DATE AND walked_at < NOW()::date + interval '1 DAY'
+    WHERE 
+      walked_at > timezone('America/New_York', NOW()::date::timestamp) AND 
+      walked_at < timezone('America/New_York', NOW()::date::timestamp) + interval '1 DAY'
     ORDER BY walk.walked_at DESC
   `);
   return camelizeKeys(rows);

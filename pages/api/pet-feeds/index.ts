@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-import * as dogWalkService from '../../../data/petFeed';
+import * as dogWalkService from '@/services/PetFeedService';
 
 export default async function handler(
   req: NextApiRequest,

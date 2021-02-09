@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-import * as dogWalkService from '../../../data/dogWalk';
+import * as DogWalkService from '@/services/DogWalkService';
 
 export default async function handler(
   req: NextApiRequest,
@@ -25,7 +25,7 @@ async function handlePut(req: NextApiRequest, res: NextApiResponse) {
     return res.status(400).end();
   }
   const updatedDogWalk = req.body;
-  const result = await dogWalkService.updateDogWalk(updatedDogWalk);
+  const result = await DogWalkService.updateDogWalk(updatedDogWalk);
   res.status(200).json(result);
 }
 
@@ -34,6 +34,6 @@ async function handleDelete(req: NextApiRequest, res: NextApiResponse) {
   if (typeof dogWalkId !== 'string') {
     return res.status(400).end();
   }
-  await dogWalkService.deleteDogWalk(dogWalkId);
+  await DogWalkService.deleteDogWalk(dogWalkId);
   res.status(200).json({ id: dogWalkId });
 }

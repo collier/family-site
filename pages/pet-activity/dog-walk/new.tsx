@@ -3,11 +3,15 @@ import { format, parse } from 'date-fns';
 import { useRouter } from 'next/router';
 
 import Button from '@/components/Button';
-import { DogWalkForm, DogWalkFormData } from '@/components/DogWalkForm';
+import BackLink from '@/components/BackLink';
+import {
+  DogWalkForm,
+  DogWalkFormData,
+} from '@/components/pet-activity/DogWalkForm';
 
 export default function NewDogWalkPage() {
   const router = useRouter();
-  const [isLoading, setIsLoading] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const onSubmit = (data: DogWalkFormData) => {
     const { petId, didPee, didPoop, walkDate, walkTime } = data;
@@ -18,7 +22,7 @@ export default function NewDogWalkPage() {
       new Date()
     ).toISOString();
 
-    setIsLoading(true);
+    setIsSubmitting(true);
 
     fetch('/api/dog-walks', {
       method: 'POST',
@@ -28,11 +32,11 @@ export default function NewDogWalkPage() {
       body: JSON.stringify({ petId, didPee, didPoop, walkedAt }),
     }).then(
       () => {
-        router.push('/pet-log');
+        router.push('/pet-activity');
       },
       (error) => {
         console.log(error);
-        setIsLoading(false);
+        setIsSubmitting(false);
       }
     );
   };
@@ -46,13 +50,19 @@ export default function NewDogWalkPage() {
 
   return (
     <div className="container">
-      <h1 className="text-5xl font-bold font-lora pt-2 pb-3">Add Dog Walk</h1>
+      <BackLink href="/pet-activity" text="Pet Activity" />
+      <h1 className="text-5xl font-bold font-lora pb-3">Add Dog Walk</h1>
       <DogWalkForm onSubmit={onSubmit} defaultValues={defaultValues}>
         <div className="space-y-2 sm:space-x-2 sm:space-y-0">
-          <Button type="submit" size="lg" loading={isLoading}>
-            Add Walk
+          <Button type="submit" size="lg" loading={isSubmitting}>
+            Submit
           </Button>
-          <Button role="link" href="/pet-log" size="lg" variant="secondary">
+          <Button
+            role="link"
+            href="/pet-activity"
+            size="lg"
+            variant="secondary"
+          >
             Cancel
           </Button>
         </div>
