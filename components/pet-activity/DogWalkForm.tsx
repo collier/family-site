@@ -1,11 +1,10 @@
 import { PropsWithChildren } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 
-import DateInput from '@/components/DateInput';
+import Input from '@/components/Input';
 import FormGroup from '@/components/FormGroup';
 import FormGroupError from '@/components/FormGroupError';
 import SelectInput from '@/components/SelectInput';
-import TimeInput from '@/components/TimeInput';
 import ToggleButton from '@/components/ToggleButton';
 
 export type DogWalkFormData = {
@@ -63,7 +62,8 @@ export function DogWalkForm({ defaultValues, onSubmit, children }: Props) {
         </div>
       </FormGroup>
       <FormGroup label="Walk Date">
-        <DateInput
+        <Input
+          type="date"
           name="walkDate"
           hasError={!!errors.walkDate}
           ref={register({ required: true })}
@@ -73,7 +73,8 @@ export function DogWalkForm({ defaultValues, onSubmit, children }: Props) {
         )}
       </FormGroup>
       <FormGroup label="Walk Time">
-        <TimeInput
+        <Input
+          type="time"
           name="walkTime"
           hasError={!!errors.walkTime}
           ref={register({ required: true })}

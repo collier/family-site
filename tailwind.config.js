@@ -4,7 +4,6 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // cream: '#faf3e1',
         cream: '#f9f6f1',
       },
     },
@@ -25,13 +24,9 @@ module.exports = {
       xl: '768px',
     },
     fontFamily: {
-      // sans:
-      //   'Inter, "Helvetica Neue", "Gill Sans", "Gill Sans MT", Calibri, sans-serif',
       sans:
         'Muli, "Helvetica Neue", "Gill Sans", "Gill Sans MT", Calibri, sans-serif',
       serif: 'Lora, Georgia, serif',
-      inter:
-        'Inter, "Helvetica Neue", "Gill Sans", "Gill Sans MT", Calibri, sans-serif',
       lora: 'Lora, Georgia, serif',
       muli:
         'Muli, "Helvetica Neue", "Gill Sans", "Gill Sans MT", Calibri, sans-serif',
@@ -41,6 +36,7 @@ module.exports = {
     extend: {
       backgroundColor: ['active'],
       opacity: ['disabled'],
+      borderWidth: ['last'],
     },
   },
   plugins: [require('@tailwindcss/forms')],

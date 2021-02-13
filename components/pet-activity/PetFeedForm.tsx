@@ -4,9 +4,7 @@ import { useForm } from 'react-hook-form';
 import FormGroup from '@/components/FormGroup';
 import FormGroupError from '@/components/FormGroupError';
 import SelectInput from '@/components/SelectInput';
-import NumberInput from '@/components/NumberInput';
-import DateInput from '@/components/DateInput';
-import TimeInput from '@/components/TimeInput';
+import Input from '@/components/Input';
 
 export type PetFeedFormData = {
   petId: string;
@@ -34,7 +32,8 @@ export function PetFeedForm({ defaultValues, onSubmit, children }: Props) {
         </SelectInput>
       </FormGroup>
       <FormGroup label="Scoops" helpText='A "scoop" is ½ a cup.'>
-        <NumberInput
+        <Input
+          type="number"
           name="dryFoodScoops"
           step="0.1"
           min="0.1"
@@ -55,7 +54,8 @@ export function PetFeedForm({ defaultValues, onSubmit, children }: Props) {
         )}
       </FormGroup>
       <FormGroup label="Feed Date">
-        <DateInput
+        <Input
+          type="date"
           name="feedDate"
           hasError={!!errors.feedDate}
           ref={register({ required: true })}
@@ -65,7 +65,8 @@ export function PetFeedForm({ defaultValues, onSubmit, children }: Props) {
         )}
       </FormGroup>
       <FormGroup label="Feed Time">
-        <TimeInput
+        <Input
+          type="date"
           name="feedTime"
           hasError={!!errors.feedTime}
           ref={register({ required: true })}

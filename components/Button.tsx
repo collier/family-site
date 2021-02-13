@@ -6,6 +6,7 @@ import LoadingSpinner from './LoadingSpinner';
 type SharedProps = PropsWithChildren<{
   variant?: 'primary' | 'danger' | 'secondary' | 'white';
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+  fullWidth?: boolean;
 }>;
 
 type LinkProps = SharedProps & {
@@ -26,11 +27,12 @@ type Props = LinkProps | ButtonProps;
 export default function Button({
   variant = 'primary',
   size = 'md',
+  fullWidth = false,
   children,
   ...props
 }: Props) {
   const btnClass = cx(
-    'inline-flex w-full sm:w-auto items-center justify-center border font-medium disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 appearance-none',
+    'inline-flex items-center justify-center border font-medium disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 appearance-none',
     {
       'px-2.5 py-1.5 text-xs rounded': size === 'xs',
       'px-3 py-2 text-sm rounded-md': size === 'sm',
@@ -45,6 +47,8 @@ export default function Button({
         variant === 'secondary',
       'border-gray-300 shadow-sm text-gray-700 bg-white hover:bg-gray-50 active:bg-indigo-100':
         variant === 'white',
+      'w-full sm:w-auto': !fullWidth,
+      'w-full': fullWidth,
     }
   );
   if (props.role === 'link') {

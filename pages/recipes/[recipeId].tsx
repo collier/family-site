@@ -1,34 +1,36 @@
-import Link from 'next/link';
 import Head from 'next/head';
 import ReactMarkdown from 'react-markdown/with-html';
-import { getAllRecipes, getRecipeById, Recipe } from '../../lib/recipes';
+
+import { getAllRecipes, getRecipeById, Recipe } from '@/services/RecipeService';
+import BackLink from '@/components/BackLink';
 
 type Props = {
-  recipe: Recipe
-}
+  recipe: Recipe;
+};
 
-export default function RecipesPage({ recipe }: Props) {
-  const { 
-    title, 
-    content, 
-    description, 
-    coverImg, 
-    prepTime, 
-    cookTime, 
-    calories, 
-    servings } = recipe;
+export default function ViewRecipePage({ recipe }: Props) {
+  const {
+    title,
+    content,
+    description,
+    coverImg,
+    prepTime,
+    cookTime,
+    calories,
+    servings,
+  } = recipe;
   return (
-    <div className="container mt-4 mb-16 font-muli">
+    <div className="container mb-16">
       <Head>
-        <title>{title}</title>
+        <title>Recipes | {title}</title>
       </Head>
-      <Link href="/">
-        <a className="block mb-2 text-lg text-blue-600">&lt; Our Recipes</a>
-      </Link>
+      <BackLink href="/recipes" text="Recipes" />
       <article>
-        <h1 className="text-5xl font-bold font-lora uppercase leading-none">{title}</h1>
-        <hr className="my-2 border-black"></hr>
-        <h2 className="text-3xl italic font-lora leading-none">{description}</h2>
+        <h1 className="text-6xl font-bold font-lora leading-none">{title}</h1>
+        <hr className="my-2 border-gray-300"></hr>
+        <h2 className="text-3xl italic font-lora leading-none">
+          {description}
+        </h2>
         <img className="my-5" src={coverImg} />
         <div className="grid grid-cols-3 sm:grid-cols-4 max-w-lg text-center sm:text-left gap-y-3 mb-6">
           <div>
@@ -43,17 +45,17 @@ export default function RecipesPage({ recipe }: Props) {
             <label className="uppercase font-bold">Servings</label>
             <p>{servings}</p>
           </div>
-          {calories && 
+          {calories && (
             <div>
               <label className="uppercase font-bold">Calories</label>
               <p>{calories}</p>
             </div>
-          }
+          )}
         </div>
         <ReactMarkdown source={content} className="markdown" />
       </article>
     </div>
-  )
+  );
 }
 
 export async function getStaticProps({ params }) {
@@ -61,9 +63,9 @@ export async function getStaticProps({ params }) {
   const recipe = getRecipeById(recipeId);
   return {
     props: {
-      recipe
-    }
-  }
+      recipe,
+    },
+  };
 }
 
 export async function getStaticPaths() {
@@ -74,9 +76,9 @@ export async function getStaticPaths() {
       return {
         params: {
           recipeId: recipe.recipeId,
-        }
-      }
+        },
+      };
     }),
-    fallback: false
-  }
+    fallback: false,
+  };
 }

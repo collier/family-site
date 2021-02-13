@@ -6,10 +6,6 @@ class MyDocument extends Document {
       <Html>
         <Head>
           <meta name="robots" content="noindex" />
-          {/* <link
-            href="https://fonts.googleapis.com/css?family=Lora:400,400i,700|Inter:300,400,500,600,700,800,900"
-            rel="stylesheet"
-          /> */}
           <link
             href="https://fonts.googleapis.com/css?family=Lora:400,400i,700|Muli:300,400,500,600,700,800,900"
             rel="stylesheet"

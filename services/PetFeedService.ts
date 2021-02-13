@@ -82,8 +82,7 @@ export async function getTodaysPetFeeds(): Promise<PetFeed[]> {
     FROM pet_feed feed 
     INNER JOIN pet ON feed.pet_id = pet.id 
     WHERE 
-      fed_at > timezone('America/New_York', NOW()::date::timestamp) AND 
-      fed_at < timezone('America/New_York', NOW()::date::timestamp) + interval '1 DAY'
+      CAST((feed.fed_at AT TIME ZONE 'America/New_York') AS DATE) = timezone('America/New_York', NOW())::date
     ORDER BY feed.fed_at DESC
   `);
   return camelizeKeys(rows);

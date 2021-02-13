@@ -27,13 +27,14 @@
 
 .markdown ul,
 .markdown ol {
-  padding-left: 1.25rem;
+  padding-left: 1.5rem;
 }
 
 .markdown ol > li {
   margin-bottom: 1rem;
 }
 
-.markdown b, .markdown strong {
+.markdown b,
+.markdown strong {
   font-weight: 800;
 }

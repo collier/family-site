@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-import * as petFeedService from '@/services/PetFeedService';
+import * as PetFeedService from '@/services/PetFeedService';
 
 export default async function handler(
   req: NextApiRequest,
@@ -25,7 +25,7 @@ async function handlePut(req: NextApiRequest, res: NextApiResponse) {
     return res.status(400).end();
   }
   const updatedPetFeed = req.body;
-  const result = await petFeedService.updatePetFeed(updatedPetFeed);
+  const result = await PetFeedService.updatePetFeed(updatedPetFeed);
   res.status(200).json(result);
 }
 
@@ -34,6 +34,6 @@ async function handleDelete(req: NextApiRequest, res: NextApiResponse) {
   if (typeof petFeedId !== 'string') {
     return res.status(400).end();
   }
-  await petFeedService.deletePetFeed(petFeedId);
+  await PetFeedService.deletePetFeed(petFeedId);
   res.status(200).json({ id: petFeedId });
 }

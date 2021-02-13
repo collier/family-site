@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-import * as dogWalkService from '@/services/PetFeedService';
+import * as PetFeedService from '@/services/PetFeedService';
 
 export default async function handler(
   req: NextApiRequest,
@@ -16,6 +16,6 @@ export default async function handler(
 
 async function handlePost(req: NextApiRequest, res: NextApiResponse) {
   const newPetFeed = req.body;
-  const result = await dogWalkService.addPetFeed(newPetFeed);
+  const result = await PetFeedService.addPetFeed(newPetFeed);
   res.status(200).json(result);
 }

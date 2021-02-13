@@ -25,8 +25,10 @@ export interface PetActivity {
 }
 
 export async function getTodaysPetActivity(): Promise<PetActivity> {
-  const dogWalks = await getTodaysDogWalks();
-  const petFeeds = await getTodaysPetFeeds();
+  const [dogWalks, petFeeds] = await Promise.all([
+    getTodaysDogWalks(),
+    getTodaysPetFeeds(),
+  ]);
   const petLog: PetActivity = {
     dryFoodScoopTotal: 0,
     durationSinceLastDogWalk: null,

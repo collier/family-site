@@ -1,5 +1,5 @@
 import fs from 'fs';
-import { join } from 'path'
+import { join } from 'path';
 import matter from 'gray-matter';
 
 export interface Recipe {
@@ -17,12 +17,12 @@ export interface Recipe {
   content?: string;
 }
 
-const recipesDirectory = join(process.cwd(), '_recipes');
+const recipesDirectory = join(process.cwd(), 'data/recipes');
 
 export function getAllRecipes() {
   const recipePaths = fs.readdirSync(recipesDirectory);
-  const recipes = recipePaths.map(recipePath => {
-    const recipeId = recipePath.replace(/\.md$/, '')
+  const recipes = recipePaths.map((recipePath) => {
+    const recipeId = recipePath.replace(/\.md$/, '');
     const fullPath = join(recipesDirectory, recipePath);
     const fileContents = fs.readFileSync(fullPath, 'utf8');
     const { data } = matter(fileContents);
@@ -39,4 +39,4 @@ export function getRecipeById(recipeId: string) {
   data.recipeId = recipeId;
   data.content = content;
   return data as Recipe;
-} 
+}

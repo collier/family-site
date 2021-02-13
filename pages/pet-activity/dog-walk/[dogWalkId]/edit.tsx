@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { format, parseISO, parse } from 'date-fns';
 import { useRouter } from 'next/router';
+import Head from 'next/head';
 
 import { getDogWalk, DogWalk } from '@/services/DogWalkService';
 import Button from '@/components/Button';
@@ -76,59 +77,64 @@ export default function EditDogWalkPage({ dogWalkId, dogWalk }: Props) {
   };
 
   return (
-    <div className="container">
-      <BackLink href="/pet-activity" text="Pet Activity" />
-      <h1 className="text-5xl font-bold font-lora pb-3">Edit Dog Walk</h1>
-      <DogWalkForm onSubmit={onSubmit} defaultValues={defaultValues}>
-        <div className="space-y-2 sm:space-x-2 sm:space-y-0">
-          <Button type="submit" size="lg" loading={isSubmitting}>
-            Submit Edits
-          </Button>
-          <Button
-            role="link"
-            href="/pet-activity"
-            size="lg"
-            variant="secondary"
-          >
-            Cancel
-          </Button>
-          <Button
-            type="button"
-            variant="danger"
-            size="lg"
-            disabled={isSubmitting}
-            onClick={() => setShowDeleteModal(true)}
-          >
-            Delete Walk
-          </Button>
-        </div>
-      </DogWalkForm>
-      <ConfirmationModal
-        show={showDeleteModal}
-        title="Delete Walk?"
-        confirmText="Are you sure you want to delete this walk?"
-        onClickBackdrop={() => setShowDeleteModal(false)}
-        confirmButton={
-          <Button
-            role="button"
-            loading={isDeleting}
-            onClick={handleDelete}
-            variant="danger"
-          >
-            Delete Walk
-          </Button>
-        }
-        cancelButton={
-          <Button
-            role="button"
-            onClick={() => setShowDeleteModal(false)}
-            variant="white"
-          >
-            Cancel
-          </Button>
-        }
-      />
-    </div>
+    <>
+      <Head>
+        <title>Our Family | Pet Activity</title>
+      </Head>
+      <div className="container">
+        <BackLink href="/pet-activity" text="Pet Activity" />
+        <h1 className="text-5xl font-bold font-lora pb-3">Edit Dog Walk</h1>
+        <DogWalkForm onSubmit={onSubmit} defaultValues={defaultValues}>
+          <div className="space-y-2 sm:space-x-2 sm:space-y-0">
+            <Button type="submit" size="lg" loading={isSubmitting}>
+              Submit Edits
+            </Button>
+            <Button
+              role="link"
+              href="/pet-activity"
+              size="lg"
+              variant="secondary"
+            >
+              Cancel
+            </Button>
+            <Button
+              type="button"
+              variant="danger"
+              size="lg"
+              disabled={isSubmitting}
+              onClick={() => setShowDeleteModal(true)}
+            >
+              Delete Walk
+            </Button>
+          </div>
+        </DogWalkForm>
+        <ConfirmationModal
+          show={showDeleteModal}
+          title="Delete Walk?"
+          confirmText="Are you sure you want to delete this walk?"
+          onClickBackdrop={() => setShowDeleteModal(false)}
+          confirmButton={
+            <Button
+              role="button"
+              loading={isDeleting}
+              onClick={handleDelete}
+              variant="danger"
+            >
+              Delete Walk
+            </Button>
+          }
+          cancelButton={
+            <Button
+              role="button"
+              onClick={() => setShowDeleteModal(false)}
+              variant="white"
+            >
+              Cancel
+            </Button>
+          }
+        />
+      </div>
+    </>
   );
 }
 
