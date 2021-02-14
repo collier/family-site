@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import Router from 'next/router';
 import useSWR from 'swr';
 
-const fetcher = (url) =>
+const fetcher = (url: string) =>
   fetch(url)
     .then((r) => r.json())
     .then((data) => {
@@ -10,11 +10,11 @@ const fetcher = (url) =>
     });
 
 type Config = {
-  redirectTo: string;
+  redirectTo?: string;
   redirectIfFound?: boolean;
 };
 
-export function useUser({ redirectTo, redirectIfFound }: Config) {
+export default function useUser({ redirectTo, redirectIfFound }: Config = {}) {
   const { data, error } = useSWR('/api/user', fetcher);
   const user = data?.user;
   const finished = Boolean(data);
@@ -28,6 +28,7 @@ export function useUser({ redirectTo, redirectIfFound }: Config) {
       // If redirectIfFound is also set, redirect if the user was found
       (redirectIfFound && hasUser)
     ) {
+      console.log('here');
       Router.push(redirectTo);
     }
   }, [redirectTo, redirectIfFound, finished, hasUser]);

@@ -16,7 +16,11 @@ export default async function handler(
 }
 
 async function handleGet(req: NextApiRequest, res: NextApiResponse) {
-  const session = await getLoginSession(req);
-  const user = await UserService.getUserById(session.userId);
-  res.status(200).json({ user: user || null });
+  try {
+    const session = await getLoginSession(req, res);
+    const user = await UserService.getUserById(session.userId);
+    res.status(200).json({ user });
+  } catch {
+    res.status(200).json({ user: null });
+  }
 }

@@ -2,6 +2,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 
 import ChevronRight from '@/components/icons/ChevronRight';
+import useUser from '@/hooks/useUser';
 
 const sections = [
   {
@@ -20,6 +21,12 @@ const sections = [
 ];
 
 export default function HomePage() {
+  const user = useUser({ redirectTo: '/login' });
+
+  if (!user) {
+    return null;
+  }
+
   return (
     <>
       <Head>

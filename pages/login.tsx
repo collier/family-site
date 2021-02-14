@@ -7,12 +7,14 @@ import { Magic } from 'magic-sdk';
 import MagicWand from '@/components/icons/MagicWand';
 import Input from '@/components/Input';
 import Button from '@/components/Button';
+import useUser from '@/hooks/useUser';
 
 type FormData = {
   email: string;
 };
 
 export default function LoginPage() {
+  useUser({ redirectTo: '/', redirectIfFound: true });
   const router = useRouter();
   const { register, handleSubmit } = useForm();
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -61,7 +63,7 @@ export default function LoginPage() {
       <Head>
         <title>Our Family</title>
       </Head>
-      <div className="min-h-screen flex justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="min-h-screen flex justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-sm w-full space-y-6">
           <div>
             <h2 className="mt-6 text-center text-6xl font-lora font-bold text-gray-900">

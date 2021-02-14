@@ -1,10 +1,16 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import jwt from 'jsonwebtoken';
 
-import magic from '../../lib/magic';
-import { setTokenCookie, getTokenCookie } from '../../lib/cookies';
+import { setTokenCookie, getTokenCookie } from './cookies';
 
-export function setLoginSession(res: NextApiResponse, session: any) {
+interface Session {
+  userId: string;
+  issuer: string; // provided by magic
+  publicAddress: string; // provided by magic
+  email: string; // provided by magic
+}
+
+export function setLoginSession(res: NextApiResponse, session: Session) {
   // Create JWT
   let token = jwt.sign(
     {
@@ -17,17 +23,23 @@ export function setLoginSession(res: NextApiResponse, session: any) {
   setTokenCookie(res, token);
 }
 
-export async function getLoginSession(req) {
+export async function getLoginSession(
+  req: NextApiRequest,
+  res: NextApiResponse
+): Promise<Session | null> {
   const token = getTokenCookie(req);
 
   if (!token) return;
 
   let session = jwt.verify(token, process.env.JWT_SECRET);
 
-  // Validate the expiration date of the session
-  if (Date.now() > expiresAt) {
-    throw new Error('Session expired');
+  if (typeof session === 'string') {
+    throw new Error('Invalid session format');
   }
 
-  return session;
+  // renew session, current session will be valid if the method reachs this
+  // point
+  setLoginSession(res, session as Session);
+
+  return session as Session;
 }
