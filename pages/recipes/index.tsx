@@ -4,13 +4,21 @@ import Image from 'next/image';
 
 import BackLink from '@/components/BackLink';
 import ChevronRight from '@/components/icons/ChevronRight';
+import LoadingForPage from '@/components/LoadingForPage';
 import { getAllRecipes, Recipe } from '@/services/RecipeService';
+import useUser from '@/hooks/useUser';
 
 type Props = {
   recipes: Recipe[];
 };
 
 export default function RecipesPage({ recipes }: Props) {
+  const user = useUser({ redirectTo: '/login' });
+
+  if (!user) {
+    return <LoadingForPage />;
+  }
+
   return (
     <>
       <Head>

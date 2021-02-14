@@ -43,3 +43,19 @@ export async function getLoginSession(
 
   return session as Session;
 }
+
+export function isAuthenticated(req: NextApiRequest, res: NextApiResponse) {
+  try {
+    const token = getTokenCookie(req);
+    if (!token) {
+      return res.status(403).end();
+    }
+    let session = jwt.verify(token, process.env.JWT_SECRET);
+    if (typeof session === 'string') {
+      throw new Error('Invalid session format');
+    }
+    return true;
+  } catch {
+    res.status(403).end();
+  }
+}

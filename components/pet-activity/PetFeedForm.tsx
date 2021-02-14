@@ -66,7 +66,7 @@ export function PetFeedForm({ defaultValues, onSubmit, children }: Props) {
       </FormGroup>
       <FormGroup label="Feed Time">
         <Input
-          type="date"
+          type="time"
           name="feedTime"
           hasError={!!errors.feedTime}
           ref={register({ required: true })}

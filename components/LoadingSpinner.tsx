@@ -2,17 +2,33 @@ import cx from 'classnames';
 
 type Props = {
   className?: string;
+  color?: string;
+  size?: '5' | '14' | '20';
 };
 
-export default function LoadingSpinner({ className }: Props) {
+export default function LoadingSpinner({
+  className,
+  color = 'white',
+  size = '5',
+}: Props) {
   return (
     <svg
-      className={cx('animate-spin h-5 w-5 text-white', className)}
+      className={cx(
+        `animate-spin h-${size} w-${size} text-${color}`,
+        className
+      )}
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"
     >
-      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+      <circle
+        className="opacity-25"
+        cx="12"
+        cy="12"
+        r="10"
+        stroke="currentColor"
+        strokeWidth="4"
+      ></circle>
       <path
         className="opacity-75"
         fill="currentColor"

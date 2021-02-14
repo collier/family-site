@@ -3,12 +3,20 @@ import ReactMarkdown from 'react-markdown/with-html';
 
 import { getAllRecipes, getRecipeById, Recipe } from '@/services/RecipeService';
 import BackLink from '@/components/BackLink';
+import LoadingForPage from '@/components/LoadingForPage';
+import useUser from '@/hooks/useUser';
 
 type Props = {
   recipe: Recipe;
 };
 
 export default function ViewRecipePage({ recipe }: Props) {
+  const user = useUser({ redirectTo: '/login' });
+
+  if (!user) {
+    return <LoadingForPage />;
+  }
+
   const {
     title,
     content,

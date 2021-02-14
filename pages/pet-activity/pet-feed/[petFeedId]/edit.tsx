@@ -5,8 +5,10 @@ import Head from 'next/head';
 
 import { getPetFeed, PetFeed } from '@/services/PetFeedService';
 import Button from '@/components/Button';
+import LoadingForPage from '@/components/LoadingForPage';
 import ConfirmationModal from '@/components/ConfirmationModal';
 import BackLink from '@/components/BackLink';
+import useUser from '@/hooks/useUser';
 import {
   PetFeedFormData,
   PetFeedForm,
@@ -19,9 +21,14 @@ type Props = {
 
 export default function EditPetFeedPage({ petFeedId, petFeed }: Props) {
   const router = useRouter();
+  const user = useUser({ redirectTo: '/login' });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+
+  if (!user) {
+    return <LoadingForPage />;
+  }
 
   const onSubmit = (data: PetFeedFormData) => {
     const { petId, dryFoodScoops, feedDate, feedTime } = data;

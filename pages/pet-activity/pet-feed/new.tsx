@@ -5,6 +5,8 @@ import Head from 'next/head';
 
 import Button from '@/components/Button';
 import BackLink from '@/components/BackLink';
+import LoadingForPage from '@/components/LoadingForPage';
+import useUser from '@/hooks/useUser';
 import {
   PetFeedFormData,
   PetFeedForm,
@@ -12,7 +14,12 @@ import {
 
 export default function NewPetFeedPage() {
   const router = useRouter();
+  const user = useUser({ redirectTo: '/login' });
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  if (!user) {
+    return <LoadingForPage />;
+  }
 
   const onSubmit = (data: PetFeedFormData) => {
     const { petId, dryFoodScoops, feedDate, feedTime } = data;

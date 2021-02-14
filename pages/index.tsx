@@ -2,6 +2,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 
 import ChevronRight from '@/components/icons/ChevronRight';
+import LoadingForPage from '@/components/LoadingForPage';
 import useUser from '@/hooks/useUser';
 
 const sections = [
@@ -24,7 +25,7 @@ export default function HomePage() {
   const user = useUser({ redirectTo: '/login' });
 
   if (!user) {
-    return null;
+    return <LoadingForPage />;
   }
 
   return (

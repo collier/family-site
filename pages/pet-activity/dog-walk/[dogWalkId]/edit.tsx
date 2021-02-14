@@ -7,6 +7,8 @@ import { getDogWalk, DogWalk } from '@/services/DogWalkService';
 import Button from '@/components/Button';
 import ConfirmationModal from '@/components/ConfirmationModal';
 import BackLink from '@/components/BackLink';
+import LoadingForPage from '@/components/LoadingForPage';
+import useUser from '@/hooks/useUser';
 import {
   DogWalkForm,
   DogWalkFormData,
@@ -19,9 +21,14 @@ type Props = {
 
 export default function EditDogWalkPage({ dogWalkId, dogWalk }: Props) {
   const router = useRouter();
+  const user = useUser({ redirectTo: '/login' });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+
+  if (!user) {
+    return <LoadingForPage />;
+  }
 
   const onSubmit = (newDogWalk: DogWalkFormData) => {
     const { petId, didPee, didPoop, walkDate, walkTime } = newDogWalk;

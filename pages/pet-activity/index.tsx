@@ -7,13 +7,21 @@ import {
 
 import Button from '@/components/Button';
 import BackLink from '@/components/BackLink';
+import LoadingForPage from '@/components/LoadingForPage';
 import PetEventLog from '@/components/pet-activity/PetEventLog';
+import useUser from '@/hooks/useUser';
 
 type Props = {
   petActivity: PetActivity;
 };
 
 export default function PetActivityPage({ petActivity }: Props) {
+  const user = useUser({ redirectTo: '/login' });
+
+  if (!user) {
+    return <LoadingForPage />;
+  }
+
   const {
     dryFoodScoopTotal,
     durationSinceLastDogWalk,

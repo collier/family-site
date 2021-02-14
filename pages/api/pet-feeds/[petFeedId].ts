@@ -1,11 +1,14 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
+import { isAuthenticated } from '../../../lib/auth';
 import * as PetFeedService from '@/services/PetFeedService';
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  // check user is authenticated before allowing call
+  isAuthenticated(req, res);
   switch (req.method) {
     case 'PUT':
       return handlePut(req, res);

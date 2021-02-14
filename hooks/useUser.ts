@@ -28,7 +28,6 @@ export default function useUser({ redirectTo, redirectIfFound }: Config = {}) {
       // If redirectIfFound is also set, redirect if the user was found
       (redirectIfFound && hasUser)
     ) {
-      console.log('here');
       Router.push(redirectTo);
     }
   }, [redirectTo, redirectIfFound, finished, hasUser]);

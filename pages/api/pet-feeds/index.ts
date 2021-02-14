@@ -1,11 +1,13 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
+import { getLoginSession, isAuthenticated } from '../../../lib/auth';
 import * as PetFeedService from '@/services/PetFeedService';
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  isAuthenticated(req, res);
   switch (req.method) {
     case 'POST':
       return handlePost(req, res);
