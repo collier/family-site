@@ -8,7 +8,7 @@ export default async function handler(
   res: NextApiResponse
 ) {
   // check user is authenticated before allowing call
-  isAuthenticated(req, res);
+  if (!isAuthenticated(req)) return res.status(403).end();
   switch (req.method) {
     case 'PUT':
       return handlePut(req, res);

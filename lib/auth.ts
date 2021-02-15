@@ -44,11 +44,11 @@ export async function getLoginSession(
   return session as Session;
 }
 
-export function isAuthenticated(req: NextApiRequest, res: NextApiResponse) {
+export function isAuthenticated(req: NextApiRequest) {
   try {
     const token = getTokenCookie(req);
     if (!token) {
-      return res.status(403).end();
+      return false;
     }
     let session = jwt.verify(token, process.env.JWT_SECRET);
     if (typeof session === 'string') {
@@ -56,6 +56,6 @@ export function isAuthenticated(req: NextApiRequest, res: NextApiResponse) {
     }
     return true;
   } catch {
-    res.status(403).end();
+    return false;
   }
 }

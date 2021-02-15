@@ -1,5 +1,5 @@
 import db from '../lib/db';
-import camelizeKeys from '../lib/camelizeKeys';
+import { camelizeKeys } from '../lib/utils';
 
 export interface DogWalk {
   id: string;
