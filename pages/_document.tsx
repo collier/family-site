@@ -6,14 +6,17 @@ class MyDocument extends Document {
       <Html>
         <Head>
           <meta name="robots" content="noindex" />
+          <meta name="apple-mobile-web-app-capable" content="yes" />
+          <meta
+            name="apple-mobile-web-app-status-bar-style"
+            content="default"
+          />
           <link
             href="https://fonts.googleapis.com/css?family=Lora:400,400i,700|Muli:300,400,500,600,700,800,900"
             rel="stylesheet"
           />
-          <link
-            rel="apple-touch-icon"
-            href="/public/apple-touch-icon.png"
-          ></link>
+          <link rel="manifest" href="/manifest.json" />
+          <link rel="apple-touch-icon" href="/house.png" />
         </Head>
         <body>
           <Main />

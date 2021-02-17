@@ -2,21 +2,24 @@ import cx from 'classnames';
 
 type Props = {
   className?: string;
-  color?: string;
-  size?: '5' | '14' | '20';
+  color?: 'white' | 'yellow-600';
+  size?: 'sm' | 'lg';
 };
 
 export default function LoadingSpinner({
   className,
   color = 'white',
-  size = '5',
+  size = 'sm',
 }: Props) {
   return (
     <svg
-      className={cx(
-        `animate-spin h-${size} w-${size} text-${color}`,
-        className
-      )}
+      className={cx(`animate-spin`, className, {
+        'h-5 w-5': size === 'sm',
+        'h-14 w-14': size === 'lg',
+        // current solution for dynamic classes being removed by PurgeCSS
+        'text-yellow-600': color === 'yellow-600',
+        'text-white': color === 'white',
+      })}
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"
