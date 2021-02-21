@@ -59,7 +59,7 @@ export default function NewDogWalkPage() {
   return (
     <>
       <Head>
-        <title>Our Family | Pet Activity</title>
+        <title>New Walk</title>
       </Head>
       <div className="container">
         <BackLink href="/pet-activity" text="Pet Activity" />

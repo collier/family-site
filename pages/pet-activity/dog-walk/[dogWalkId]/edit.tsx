@@ -86,7 +86,7 @@ export default function EditDogWalkPage({ dogWalkId, dogWalk }: Props) {
   return (
     <>
       <Head>
-        <title>Our Family | Pet Activity</title>
+        <title>Edit Walk</title>
       </Head>
       <div className="container">
         <BackLink href="/pet-activity" text="Pet Activity" />

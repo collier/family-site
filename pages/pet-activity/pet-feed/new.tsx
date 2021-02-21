@@ -58,7 +58,7 @@ export default function NewPetFeedPage() {
   return (
     <>
       <Head>
-        <title>Our Family | Pet Activity</title>
+        <title>New Feed</title>
       </Head>
       <div className="container">
         <BackLink href="/pet-activity" text="Pet Activity" />

@@ -22,7 +22,7 @@ export default function RecipesPage({ recipes }: Props) {
   return (
     <>
       <Head>
-        <title>Our Family | Recipes</title>
+        <title>Recipes</title>
       </Head>
       <div className="container">
         <BackLink href="/" text="Home" />

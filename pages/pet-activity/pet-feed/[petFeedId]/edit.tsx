@@ -85,7 +85,7 @@ export default function EditPetFeedPage({ petFeedId, petFeed }: Props) {
   return (
     <>
       <Head>
-        <title>Our Family | Pet Activity</title>
+        <title>Edit Feed</title>
       </Head>
       <div className="container">
         <BackLink href="/pet-activity" text="Pet Activity" />

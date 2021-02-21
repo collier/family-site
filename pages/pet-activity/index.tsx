@@ -30,7 +30,7 @@ export default function PetActivityPage({ petActivity }: Props) {
   return (
     <>
       <Head>
-        <title>Our Family | Pet Activity</title>
+        <title>Pet Activity</title>
       </Head>
       <div className="container">
         <BackLink href="/" text="Home" />
