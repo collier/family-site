@@ -34,7 +34,7 @@ export default function ViewRecipePage({ recipe }: Props) {
       </Head>
       <BackLink href="/recipes" text="Recipes" />
       <article>
-        <h1 className="text-6xl font-bold font-lora uppercase leading-none">
+        <h1 className="text-5xl sm:text-6xl font-bold font-lora uppercase leading-none">
           {title}
         </h1>
         <hr className="my-2 border-gray-300"></hr>
